@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+form input{
+    background-color: white;
+    color:black;
+    width: 200px;
+}
+::placeholder {
+    color: black;
+    opacity: 1; 
+    padding-left:5px;
+  }
+  
+  :-ms-input-placeholder {
+   color:black;
+  }
+  
+  ::-ms-input-placeholder {
+   color: black;
+  }
+body{
+    background-image: linear-gradient(violet,black);
+    background-repeat: no-repeat;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+.float-row{
+    background-color: #eeeeee;
+    display: flex;
+    border-radius: 100px;
+    width: 600px;
+    height:500px;
+    padding-bottom: 0px;
+    padding-top: 70px;
+    align-content: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 97px;
+}
+.form-control{
+    height: 40px;
+    width: 300px;
+    margin: 10px;
+}
+form .btn1{
+    height: 30px;
+    width:fit-content;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#Register{
+    background-color: violet;
+}
+#login{
+    background-color:greenyellow;
+}
+
+.btn1:hover{
+    color: rebeccapurple;
+}
+h1{
+    justify-content: center;
+    display: flex;
+    align-content: center;
+}
+form i{
+    position: fixed;
+    font-size: 18px;
+    margin: 15px 0 0 -40px;
+    color: black;
+}
+#icon{
+    margin-top:20px;
+    color:black;
+}
+
+
