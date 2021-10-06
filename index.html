@@ -1,209 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Sign Up</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="signUp.css">
+    <script src="https://kit.fontawesome.com/a4dc2c536f.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
-    
-    <title>Data Management Using Firebase</title>
 </head>
 
-<style>
+<body>
+    
+    <script>
+         const firebaseConfig = {
+          apiKey: "AIzaSyAoiW7vGBX1ZejXUfHtRaHBU8rG4_5iCfU",
+          authDomain: "data-mgmt-e19d5.firebaseapp.com",
+          databaseURL: "https://data-mgmt-e19d5-default-rtdb.firebaseio.com",
+          projectId: "data-mgmt-e19d5",
+          storageBucket: "data-mgmt-e19d5.appspot.com",
+          messagingSenderId: "926884353388",
+          appId: "1:926884353388:web:88c14dea85c049ceb74f49"
+        };
+      
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
 
-.background{
-    background-image: url('Background\ pic.jpg'); 
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    height:720px; 
-}
-
-h1{
-    color:cyan; 
-    margin-top:30px;
-    font-size:60px;
-    font-weight:bold;
-}
-
-label{
-    color:white; 
-    font-size:20px;
-}
-
-input{
-    font-weight: bold; 
-    font-size:18px; 
-    padding-left:18px;
-    border: solid 2px coral;
-    border-radius:20px;
-}
-
-#insert, #select, #update, #delete{
-    color:black; 
-    border-radius: 25px; 
-    border: solid 2px black;
-    font-weight: bold;
-}
-
-#logout{
-    float:right;
-    margin-right:50px;
-    font-size:15px;
-    font-weight: bold;
-    border: solid 2px black;
-    border-radius: 25px; 
-    outline: none;
-}
-
-</style>
-
-<body class="background">
-    <div class="container">
-    <button id="logout" onclick="logout();" class="glyphicon glyphicon-log-out btn btn-danger"> LOGOUT</button>
-    <br>
-    <center>
-        <h1>Welcome User!</h1>
-        
-    <br><br><br><br>
-    <label>Name:</label> <br> <input id="user" type="text"> <br><br>
-    <label>Roll No.:</label> <br> <input id="rollno" type="text"> <br><br>
-    <label>Section:</label> <br> <input id="section" type="text"> <br><br>
-    <label>Gender:</label> <br> <input id="gender" type="text"> <br><br>
-    <label>School:</label> <br> <input id="school" type="text">
-    <br><br><br><br>
-    <button id="insert"  class= "btn btn-success">INSERT</button>
-    <button id="select" class= "btn btn-info">RETREIVE</button>
-    <button id="update" class= "btn btn-warning">UPDATE</button>
-    <button id="delete" class= "btn btn-danger">DELETE</button>
-</center>
-</div>
-
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAoiW7vGBX1ZejXUfHtRaHBU8rG4_5iCfU",
-      authDomain: "data-mgmt-e19d5.firebaseapp.com",
-      projectId: "data-mgmt-e19d5",
-      storageBucket: "data-mgmt-e19d5.appspot.com",
-      messagingSenderId: "926884353388",
-      appId: "1:926884353388:web:88c14dea85c049ceb74f49"
-    };
-  
-    //------------------------------------------------------Initialize Firebase-----------------------------------------------------//
-    const app = initializeApp(firebaseConfig);
-
-    import {getDatabase, ref, get, set, child, update, remove}
-    from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
-    const db = getDatabase();
-
-    //--------------------------------------------------------Assigning events to buttons-----------------------------------------------------//
-
-    var insertbtn = document.getElementById("insert");
-    var selectbtn = document.getElementById("select");
-    var updatebtn = document.getElementById("update");
-    var deletebtn = document.getElementById("delete");
-    var logoutbtn = document.getElementById("logout");
-
-    //--------------------------------------------------------Insert data to Firebase-----------------------------------------------------//
-     
-    var uname = document.getElementById("user");
-    var urollno = document.getElementById("rollno");
-    var usection = document.getElementById("section");
-    var ugender = document.getElementById("gender");
-    var uschool = document.getElementById("school");
- 
-      function insertData(){
-          set(ref(db,"Students/"+urollno.value),{
-            NameOfTheStudent: uname.value,
-            RollNo: urollno.value,
-            Section: usection.value,
-            Gender: ugender.value,
-            School: uschool.value
-        })
-        .then(()=>{
-            alert("Data stored successfully");
-        })
-        .catch((error)=>{
-            alert("Data not stored. Unsuccessful attempt, error"+error);
-        });
-      }
-
-      insertbtn.addEventListener("click",insertData);
-
-    //--------------------------------------------------------Retreive data from Firebase-----------------------------------------------------//
-
-    function retreiveData(){
-        const dbref = ref(db);
-
-        get(child(dbref,"/Students/"+urollno.value)).then((snapshot)=>{
-            if(snapshot.exists()){
-                uname.value = snapshot.val().NameOfTheStudent;
-                usection.value = snapshot.val().Section;
-                ugender.value = snapshot.val().Gender;
-                uschool.value = snapshot.val().School;
-            }
-            else{
-                alert("No data found");
-            }
-        })
-        .catch((error)=>{
-            alert("unsuccessful, error"+error);
-        });
-    }
-
-    selectbtn.addEventListener("click",retreiveData);
-
-    //--------------------------------------------------------Update data in Firebase-----------------------------------------------------//
-
-    function updateData(){
-        update(ref(db,"/Students/"+urollno.value),{
-            NameOfTheStudent: uname.value,
-            Section: usection.value,
-            Gender: ugender.value,
-            School: uschool.value
-        })
-        .then(()=>{
-            alert("Data updated successfully");
-        })
-        .catch((error)=>{
-            alert("Data not updated. Unsuccessful attempt, error"+error);
-        });
-    }
-
-    updatebtn.addEventListener("click",updateData);
-
-    //--------------------------------------------------------Delete data in Firebase-----------------------------------------------------//
-
-    function deleteData(){
-        remove(ref(db,"/Students/"+urollno.value))
-        .then(()=>{
-            alert("Data deleted successfully");
-        })
-        .catch((error)=>{
-            alert("Data not deleted. Unsuccessful attempt, error"+error);
-        });
-    }
-
-    deletebtn.addEventListener("click",deleteData);
-
-    //--------------------------------------------------------Logout or back to sign in------------------------------------ -------------//
-
-    function logout(){
-        window.location="login.html";
-    }
-    logoutbtn.addEventListener("click",logout);
-
-</script>
-
+    <section class="Form">
+        <center>
+            <div class="float-container">
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="float-row" style="float: left; margin-left: 50px;">
+                    <div class="col-lg-7 col-md-7 col-sm-7">
+                        <h1><b>REGISTRATION</b></h1>
+                        <br>
+                        <form>
+                            <div class="form-row">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
+                                    <input type="text" class="form-control" id="Name" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
+                                    <input type="email" class="form-control" id="Email" placeholder="Enter Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
+                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                    <i class="fa fa-lock" id="icon" onclick="show()"></i>
+                                </div>
+                            </div>
+                        </form>
+                       <br>
+                        <form>
+                            <div class="form-row">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
+                                    <button id="Register" type="submit" class="btn1">Sign Up</button>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-7 col-md-7 col-sm-7" style="margin-top: 30px;">
+                                    <label style="margin-top: 100px;"><b>Already a user? </b></label><br>
+                                    <button id="login" type="submit" class="btn1" formaction="login.html">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </center>
+    </section>
+   
+<script src="signUp.js"></script>
 </body>
 </html>

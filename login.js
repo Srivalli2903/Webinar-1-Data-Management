@@ -18,7 +18,7 @@ document.getElementById("Loginbtn").addEventListener('click', e => {
         db.collection('users').doc(uid).get().then(snapshot => {
             alert("Hello " + snapshot.data().Name + "!\r\nWelcome!")
             localStorage.setItem("location", snapshot.data().Location)
-            location.href = "index.html";
+            location.href = "home.html";
         })
 
     })
