@@ -21,7 +21,7 @@ document.getElementById("Register").addEventListener('click', e => {
                             Password: password
                         }).then(() => {
                             if(confirm("You have been successfully registered.")){
-                            window.location.href = "Login.html"}
+                            window.location.href = "login.html"}
                         });
 
                     })
