@@ -2,7 +2,6 @@ const txtEmail = document.getElementById("Email")
 const txtPassword = document.getElementById("password")
 const txtName = document.getElementById("Name")
 
-var txtGrade = document.getElementById("grade");
 document.getElementById("Register").addEventListener('click', e => {
     e.preventDefault();
     const email = txtEmail.value;
@@ -31,14 +30,3 @@ document.getElementById("Register").addEventListener('click', e => {
                 })
                 }
 })
-function show() {
-    //Code to view the typed password
-    var icon = document.getElementById("icon")
-    if (txtPassword.type === "password") {
-        txtPassword.type = "text"
-        icon.style.color = "grey"
-    } else {
-        txtPassword.type = "password"
-        icon.style.color = '#eeeeee';
-    }
-}

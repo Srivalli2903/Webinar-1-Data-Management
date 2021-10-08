@@ -120,9 +120,17 @@ input{
     var usection = document.getElementById("section");
     var ugender = document.getElementById("gender");
     var uschool = document.getElementById("school");
- 
-      function insertData(){
-          set(ref(db,"Students/"+urollno.value),{
+    
+
+    insertbtn.addEventListener('click', e => {
+    e.preventDefault();
+    
+    if(uname.value =="" || urollno.value =="" || usection.value =="" || ugender.value =="" || uschool.value ==""){
+        alert("Please enter all the fields");
+    }
+    if(uname.value !="" || urollno.value !="" || usection.value !="" || ugender.value !="" || uschool.value !=""){
+    function insertData(){
+        set(ref(db,"Students/"+urollno.value),{
             NameOfTheStudent: uname.value,
             RollNo: urollno.value,
             Section: usection.value,
@@ -136,11 +144,18 @@ input{
             alert("Data not stored. Unsuccessful attempt, error"+error);
         });
       }
-
       insertbtn.addEventListener("click",insertData);
-
+    }
+    })
     //--------------------------------------------------------Retreive data from Firebase-----------------------------------------------------//
 
+    selectbtn.addEventListener('click', e => {
+    e.preventDefault();
+    
+    if(urollno.value ==""){
+        alert("Please enter the roll no.");
+    }
+    if(urollno.value !=""){
     function retreiveData(){
         const dbref = ref(db);
 
@@ -159,11 +174,18 @@ input{
             alert("unsuccessful, error"+error);
         });
     }
-
     selectbtn.addEventListener("click",retreiveData);
+    }
+    })
 
     //--------------------------------------------------------Update data in Firebase-----------------------------------------------------//
-
+    updatebtn.addEventListener('click', e => {
+    e.preventDefault();
+    
+    if(uname.value =="" || urollno.value =="" || usection.value =="" || ugender.value =="" || uschool.value ==""){
+        alert("Please enter the details w.r.t the roll no.");
+    }
+    if(uname.value !="" || urollno.value !="" || usection.value !="" || ugender.value !="" || uschool.value !=""){
     function updateData(){
         update(ref(db,"/Students/"+urollno.value),{
             NameOfTheStudent: uname.value,
@@ -178,11 +200,19 @@ input{
             alert("Data not updated. Unsuccessful attempt, error"+error);
         });
     }
-
     updatebtn.addEventListener("click",updateData);
+    }
+    })
 
     //--------------------------------------------------------Delete data in Firebase-----------------------------------------------------//
 
+    deletebtn.addEventListener('click', e => {
+    e.preventDefault();
+    
+    if(urollno.value ==""){
+        alert("Please enter the roll no.");
+    }
+    if(urollno.value !=""){
     function deleteData(){
         remove(ref(db,"/Students/"+urollno.value))
         .then(()=>{
@@ -192,17 +222,18 @@ input{
             alert("Data not deleted. Unsuccessful attempt, error"+error);
         });
     }
-
     deletebtn.addEventListener("click",deleteData);
+    }
+    })
 
     //--------------------------------------------------------Logout or back to sign in------------------------------------ -------------//
 
     function logout(){
-        window.location="login.html";
+    if(confirm("Do you want to logout?")){
+    window.location.href = "login.html"}
     }
     logoutbtn.addEventListener("click",logout);
 
 </script>
-
 </body>
 </html>

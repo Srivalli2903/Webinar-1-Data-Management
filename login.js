@@ -29,35 +29,6 @@ document.getElementById("Loginbtn").addEventListener('click', e => {
 }
 )
 
-document.getElementById("forgotPassword").addEventListener('click', e => {
-//function forgotPassword(){
-      e.preventDefault();
-      var auth = firebase.auth();
-      const email = document.getElementById('signEmail').value
-      if(email !== "")
-      {
-          auth.sendPasswordResetEmail(email).then(function(){
-                window.alert("Email has been sent to you. Please check your inbox.")
-          })
-          .catch(function(error){
-              alert(error.message)
-              console.log(error.message)
-          })
-      }
-  }
-)
-
-function show() {
-    //Code for viewing typed pasword
-    var icon = document.getElementById("icon")
-    if (txtPassword.type === "password") {
-        txtPassword.type = "text"
-        icon.style.color = "grey"
-    } else {
-        txtPassword.type = "password"
-        icon.style.color = '#eeeeee';
-    }
-}
 
 
 
